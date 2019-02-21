@@ -1,0 +1,66 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.2.RELEASE'
+		buildDir = '/build/test-results'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+	}
+	
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
+	}
+	
+}
+
+	plugins{
+		id 'org.sonarqube' version '2.7'
+	}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.2"
+    reportsDir = file("${buildDir}/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+
+group = 'com.idexcel.accountservices'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+sonarqube{
+ properties {
+       property "sonar.projectKey", "projectName"
+     }
+}
+
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
