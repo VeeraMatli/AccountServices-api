@@ -4,7 +4,7 @@
         checkout scm
        }
   stage('Build Image'){
-        sh 'gradlew build'
+        sh 'gradle build'
   }
   
 }
