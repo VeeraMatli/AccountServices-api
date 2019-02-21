@@ -4,7 +4,11 @@
         checkout scm
        }
   stage('Build Image'){
-        sh 'gradle build'
+        buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
   }
   
 }
+
+
+
+        

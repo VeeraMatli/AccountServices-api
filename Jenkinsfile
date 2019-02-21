@@ -4,7 +4,7 @@
         checkout scm
        }
   stage('Build Image'){
-        buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+        build '/AccountServices-api'
   }
   
 }
