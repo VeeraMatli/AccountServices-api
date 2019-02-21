@@ -4,7 +4,7 @@
         checkout scm
        }
   stage('Build Image'){
-        build '/AccountServices-api'
+        gradle build
   }
   
 }
