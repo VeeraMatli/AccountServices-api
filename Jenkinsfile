@@ -1,14 +1,12 @@
- 
- node {
+node {
        stage('pulling code from git'){
         checkout scm
        }
   stage('Build Image'){
-        sh 'sudo gradle build'
+        sh '/opt/gradle/gradle-5.2.1/bin/gradle build'
   }
-  
+stage ('Bootrun'){
+		sh '/opt/gradle/gradle-5.2.1/bin/gradle bootRun'
+} 
+ 
 }
-
-
-
-        
