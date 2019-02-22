@@ -31,7 +31,7 @@ public class AccountDetailsController {
 
 	public String jwtToken;
 	
-	@RequestMapping(path = "/Accounts/login/{userName}/{password}", method = RequestMethod.GET)
+	@RequestMapping(path = "/login/{userName}/{password}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> checkLogin(@PathVariable String userName, @PathVariable String password) {
 		HttpHeaders headers = new HttpHeaders();
@@ -84,7 +84,7 @@ public class AccountDetailsController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/Accounts/{userName}",produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(method = RequestMethod.GET, value = "/Account/{userName}",produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountDetails> getAccountDetails(@PathVariable String userName) {
