@@ -6,7 +6,7 @@ node {
         sh '/opt/gradle/gradle-5.2.1/bin/gradle build -x test'
   }
   
-  tage('Build Image'){
+  stage('Build Image'){
         sh 'sudo docker build -t veeramatli/accountservices-api:${BUILD_NUMBER} .'
         sh 'docker tag veeramatli/accountservices-api:${BUILD_NUMBER} veeramatli/accountservices-api:latest'
   }
