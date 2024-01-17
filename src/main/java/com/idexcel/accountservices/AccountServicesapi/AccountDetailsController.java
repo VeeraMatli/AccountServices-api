@@ -12,8 +12,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +35,7 @@ public class AccountDetailsController {
 
 	public String jwtToken;
 	
-	@RequestMapping(path = "/Accounts/login/{userName}/{password}", method = RequestMethod.GET)
+	@GetMapping(path = "/Accounts/login/{userName}/{password}")
 	@ResponseBody
 	public ResponseEntity<?> checkLogin(@PathVariable String userName, @PathVariable String password) {
 		HttpHeaders headers = new HttpHeaders();
@@ -48,7 +52,7 @@ public class AccountDetailsController {
 	}
 
 
-	@RequestMapping(method = RequestMethod.GET, value = "/Accounts")
+	@GetMapping(value = "/Accounts")
 	public ResponseEntity<List<AccountDetails>> getAllAccountDetails(HttpServletResponse response) {
 		List<AccountDetails> detailsList = accountDetailsService.getAllAccountDetails();
 		if (detailsList == null) {
@@ -59,7 +63,7 @@ public class AccountDetailsController {
 		return new ResponseEntity<List<AccountDetails>>(detailsList, header, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/Accounts/add", method = RequestMethod.POST)
+	@PostMapping(value = "/Accounts/add")
 	@ResponseBody
 	public ResponseEntity<?> addDetails(@RequestBody AccountDetails details) {
 		Map<String, Object> json = new HashMap<String, Object>();
@@ -84,7 +88,7 @@ public class AccountDetailsController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/Accounts/{userName}",produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/Accounts/{userName}",produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountDetails> getAccountDetails(@PathVariable String userName) {
@@ -94,19 +98,19 @@ public class AccountDetailsController {
 		return new ResponseEntity<>(accountDetails,headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/Accounts/{userName}")
+	@PutMapping(value = "/Accounts/{userName}")
 	public String putAccountDetails(@RequestBody AccountDetails details) {
 		accountDetailsService.save(details);
 		return details.getAccountId();
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "/Accounts/{userName}")
+	@DeleteMapping(value = "/Accounts/{userName}")
 	public String deleteAccount(@PathVariable String userName) {
 		accountDetailsService.deleteUser(userName);
 		return "Account Deleted";
 	}
 
-	@RequestMapping(method = RequestMethod.PATCH, value = "/Accounts/{userName}")
+	@PatchMapping(value = "/Accounts/{userName}")
 	public String patchAccountDetails(@RequestBody AccountDetails details, @PathVariable String userName) {
 		accountDetailsService.patchUser(details, userName);
 		return details.getAccountId();
